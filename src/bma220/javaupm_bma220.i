@@ -4,23 +4,25 @@
 %include "typemaps.i"
 %include "arrays_java.i";
 %include "../java_buffer.i"
+%include "../upm_javastdvector.i"
 
 %apply int {mraa::Edge};
 %apply float *INOUT { float *x, float *y, float *z };
 
-%typemap(jni) float* "jfloatArray"
-%typemap(jstype) float* "float[]"
-%typemap(jtype) float* "float[]"
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Float;
+%}
 
-%typemap(javaout) float* {
-    return $jnicall;
+%typemap(javaout) upm::BMA220 {
+    return new $&javaclassname($jnicall, true);
 }
+%typemap(javaout) std::vector<float> {
+    return (AbstractList<Float>)(new $&javaclassname($jnicall, true));
+}
+%typemap(jstype) std::vector<float> "AbstractList<Float>"
 
-%typemap(out) float *getAccelerometer {
-    $result = JCALL1(NewFloatArray, jenv, 3);
-    JCALL4(SetFloatArrayRegion, jenv, $result, 0, 3, $1);
-    delete [] $1;
-}
+%template(floatVector) std::vector<float>;
 
 %ignore getAccelerometer(float *, float *, float *);
 
@@ -30,7 +32,7 @@
 
 %include "bma220.hpp"
 
-%define GETTER get_gpioIntr();
+%define GETTER get_gpioIntr()
 %enddef
 JAVA_ADD_INSTALLISR_GPIO(upm::BMA220)
 

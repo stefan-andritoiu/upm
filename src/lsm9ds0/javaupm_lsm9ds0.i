@@ -4,35 +4,22 @@
 %include "typemaps.i"
 %include "arrays_java.i";
 %include "../java_buffer.i"
+%include "../upm_javastdvector.i"
 
-%apply int {mraa::Edge};
-%apply float *INOUT { float *x, float *y, float *z };
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Float;
+%}
 
-%typemap(jni) float* "jfloatArray"
-%typemap(jstype) float* "float[]"
-%typemap(jtype) float* "float[]"
-
-%typemap(javaout) float* {
-    return $jnicall;
+%typemap(javaout) upm::LSM9DS0 {
+    return new $&javaclassname($jnicall, true);
 }
-
-%typemap(out) float *getAccelerometer {
-    $result = JCALL1(NewFloatArray, jenv, 3);
-    JCALL4(SetFloatArrayRegion, jenv, $result, 0, 3, $1);
-    delete [] $1;
+%typemap(javaout) std::vector<float> {
+    return (AbstractList<Float>)(new $&javaclassname($jnicall, true));
 }
+%typemap(jstype) std::vector<float> "AbstractList<Float>"
 
-%typemap(out) float *getGyroscope {
-    $result = JCALL1(NewFloatArray, jenv, 3);
-    JCALL4(SetFloatArrayRegion, jenv, $result, 0, 3, $1);
-    delete [] $1;
-}
-
-%typemap(out) float *getMagnetometer {
-    $result = JCALL1(NewFloatArray, jenv, 3);
-    JCALL4(SetFloatArrayRegion, jenv, $result, 0, 3, $1);
-    delete [] $1;
-}
+%template(floatVector) std::vector<float>;
 
 %ignore getAccelerometer(float *, float *, float *);
 %ignore getGyroscope(float *, float *, float *);

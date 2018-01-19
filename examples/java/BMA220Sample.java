@@ -22,6 +22,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import java.util.AbstractList;
+import java.lang.Float;
+
 public class BMA220Sample {
 
 	public static void main(String[] args) throws InterruptedException {
@@ -31,12 +34,12 @@ public class BMA220Sample {
 		upm_bma220.BMA220 sensor = new upm_bma220.BMA220();
 
 		while (true) {
-			float acc[];
+			AbstractList<Float> acc;
 
 			sensor.update();
 			acc = sensor.getAccelerometer();
 			System.out.print("Accelerometer: ");
-			System.out.println("AX: " + acc[0] + "AY: " + acc[1] + "AZ: " + acc[2]);
+			System.out.println("AX: " + acc.get(0) + "AY: " + acc.get(1) + "AZ: " + acc.get(2));
 
 			Thread.sleep(1000);
 		}

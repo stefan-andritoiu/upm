@@ -23,6 +23,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import java.util.AbstractList;
+import java.lang.Float;
+
 import upm_mma7660.MMA7660;
 
 public class MMA7660Sample
@@ -44,7 +47,7 @@ public class MMA7660Sample
 
             while (true)
             {
-                upm_mma7660.FloatVector acceleration = accel.getAcceleration();
+                AbstractList<Float> acceleration = accel.getAcceleration();
                 System.out.println("Acceleration: x = "
                                    + acceleration.get(0)
                                    + " y = "

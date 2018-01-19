@@ -22,6 +22,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import java.util.AbstractList;
+import java.lang.Float;
+
 public class LSM9DS0Sample {
 
 	public static void main(String[] args) throws InterruptedException {
@@ -37,17 +40,17 @@ public class LSM9DS0Sample {
 		while (true) {
 			sensor.update();
 
-			float[] accel = sensor.getAccelerometer();
+			AbstractList<Float> accel = sensor.getAccelerometer();
 			System.out.println("Accelerometer: ");
-			System.out.println("AX: " + accel[0] + "; AY: " + accel[1] + "; AZ: " + accel[2]);
+			System.out.println("AX: " + accel.get(0) + "; AY: " + accel.get(1) + "; AZ: " + accel.get(2));
 
-			float[] gyro = sensor.getGyroscope();
+			AbstractList<Float> gyro = sensor.getGyroscope();
 			System.out.println("Gyroscope: ");
-			System.out.println("GX: " + gyro[0] + "; GY: " + gyro[1] + "; GZ: " + gyro[2]);
+			System.out.println("GX: " + gyro.get(0) + "; GY: " + gyro.get(1) + "; GZ: " + gyro.get(2));
 
-			float[] magnet = sensor.getMagnetometer();
+			AbstractList<Float> magnet = sensor.getMagnetometer();
 			System.out.println("Magnetometer: ");
-			System.out.println("MX: " + magnet[0] + "; MY: " + magnet[1] + "; MZ: " + magnet[2]);
+			System.out.println("MX: " + magnet.get(0) + "; MY: " + magnet.get(1) + "; MZ: " + magnet.get(2));
 
 			System.out.println("Temperature: " + sensor.getTemperature());
 
