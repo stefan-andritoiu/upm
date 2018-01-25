@@ -58,12 +58,12 @@ uint32_t WheelEncoder::getMillis()
   gettimeofday(&now, NULL);
 
   // compute the delta since m_startTime
-  if( (elapsed.tv_usec = now.tv_usec - m_startTime.tv_usec) < 0 ) 
+  if( (elapsed.tv_usec = now.tv_usec - m_startTime.tv_usec) < 0 )
     {
       elapsed.tv_usec += 1000000;
       elapsed.tv_sec = now.tv_sec - m_startTime.tv_sec - 1;
-    } 
-  else 
+    }
+  else
     {
       elapsed.tv_sec = now.tv_sec - m_startTime.tv_sec;
     }
@@ -103,4 +103,3 @@ void WheelEncoder::wheelISR(void *ctx)
   upm::WheelEncoder *This = (upm::WheelEncoder *)ctx;
   This->m_counter++;
 }
-

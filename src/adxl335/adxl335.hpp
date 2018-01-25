@@ -144,5 +144,3 @@ namespace upm {
     float m_zeroX, m_zeroY, m_zeroZ;
   };
 }
-
-

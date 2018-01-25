@@ -21,6 +21,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+ import java.util.AbstractList;
 
 //NOT TESTED!!!
 public class MMA7455Sample {
@@ -28,9 +29,10 @@ public class MMA7455Sample {
 	public static void main(String[] args) throws InterruptedException {
 		// ! [Interesting]
 		upm_mma7455.MMA7455 sensor = new upm_mma7455.MMA7455(0);
+		AbstractList<Short> val;
 
 		while (true) {
-			upm_mma7455.ShortVector val = sensor.readData();
+			val = sensor.readData();
 			System.out.println("Accelerometer X: " + val.get(0) + ", Y: " + val.get(1) + ", Z: " + val.get(2));
 
 			Thread.sleep(1000);

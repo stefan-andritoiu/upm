@@ -32,7 +32,7 @@
 #define H3LIS331DL_DEFAULT_I2C_ADDR 0x18
 
 namespace upm {
-  
+
   /**
    * @brief H3LIS331DL I2C Accelerometer (400g) library
    * @defgroup h3lis331dl libupm-h3lis331dl
@@ -67,7 +67,7 @@ namespace upm {
       // factory calibration data. Changing those values may lead to
       // improper functioning of the device.
 
-      // 0x00-0x0E reserved 
+      // 0x00-0x0E reserved
 
       REG_WHOAMI                = 0x0f,
 
@@ -105,7 +105,7 @@ namespace upm {
 
       // 0x38-0x3f reserved
     } H3LIS331DL_REG_T;
-    
+
     /**
      * REG1 bits
      */
@@ -213,7 +213,7 @@ namespace upm {
       I_DR                      = 0x2, // Data Ready
       I_BOOTING                 = 0x3  // Boot is running
     } I_CFG_BITS_T;
-    
+
     /**
      * REG4 bits
      */
@@ -245,7 +245,7 @@ namespace upm {
     typedef enum {
       REG5_TURNON0              = 0x01, // turn-on mode for sleep-to-wake
       REG5_TURNON1              = 0x02
- 
+
       // bits 04-80 reserved
     } REG5_BITS_T;
 
@@ -290,7 +290,7 @@ namespace upm {
       INT_SRC_IA                = 0x40  // Interrupt generated (active)
       // 0x80 reserved
     } INT_SRC_BITS_T;
-    
+
     /**
      * H3LIS331DL constructor
      *
@@ -303,7 +303,7 @@ namespace upm {
      * H3LIS331DL destructor
      */
     ~H3LIS331DL();
-    
+
     /**
      * Sets up initial values and starts operation
      *
@@ -312,7 +312,7 @@ namespace upm {
      * @param fs FullScale: one of the FS_BITS_T values
      * @return True if successful
      */
-    bool init(DR_BITS_T odr=DR_50_37, PM_BITS_T pm=PM_NORMAL, 
+    bool init(DR_BITS_T odr=DR_50_37, PM_BITS_T pm=PM_NORMAL,
               FS_BITS_T fs=FS_100);
 
     /**
@@ -343,7 +343,7 @@ namespace upm {
      * composed of REG1_XEN, REG1_YEN, and/or REG1_ZEN corresponding to
      * the axes you want enabled.
      *
-     * @param axisEnable Bitmask of axes to enable 
+     * @param axisEnable Bitmask of axes to enable
      * (REG1_XEN | REG1_YEN | REG1_ZEN)
      * @return True if successful
      */
@@ -454,7 +454,7 @@ namespace upm {
      * @return True if successful
      */
     bool setInterrupt2PadConfig(I_CFG_BITS_T val);
-    
+
     /**
      * Enables block data update. When enabled, low/high output
      * registers are not updated until both low and high values have
@@ -474,7 +474,7 @@ namespace upm {
     bool enableBLE(bool enable);
 
     /**
-     * Enables sleep-to-wake functionality  
+     * Enables sleep-to-wake functionality
      *
      * @param enable True to enable, false otherwise
      * @return True if successful
@@ -634,5 +634,3 @@ namespace upm {
     uint8_t m_addr;
   };
 }
-
-

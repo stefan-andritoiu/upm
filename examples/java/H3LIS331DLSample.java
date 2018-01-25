@@ -21,6 +21,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+ import java.util.AbstractList;
 
 //NOT TESTED!!!
 
@@ -28,25 +29,27 @@ import java.util.AbstractList;
 import java.lang.Float;
 
 public class H3LIS331DLSample {
-	
+
 	public static void main(String[] args) throws InterruptedException {
 		//! [Interesting]
-		
+		AbstractList<Integer> val;
+		AbstractList<Float> accel;
+
 		// Instantiate an H3LIS331DL on I2C bus 0
 		upm_h3lis331dl.H3LIS331DL sensor = new upm_h3lis331dl.H3LIS331DL(0);
-		
+
 		// Initialize the device with default values
 		sensor.init();
-		
+
 		while(true){
 			sensor.update();
-			
-			upm_h3lis331dl.IntVector val = sensor.getRawXYZ();
+
+			val = sensor.getRawXYZ();
 			System.out.println( "Raw: X: " + val.get(0) + " Y: " + val.get(1) + " Z: " + val.get(2)  );
-			
-			upm_h3lis331dl.FloatVector accel = sensor.getAcceleration();
+
+			accel = sensor.getAcceleration();
 			System.out.println( "Acceleration: X: " + accel.get(0) + " Y: " + accel.get(1) + " Z: " + accel.get(2) );
-			
+
 			Thread.sleep(1000);
 		}
 		//! [Interesting]

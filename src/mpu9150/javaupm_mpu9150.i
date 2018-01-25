@@ -3,16 +3,32 @@
 %include "typemaps.i"
 %include "arrays_java.i"
 %include "../java_buffer.i"
-%include "std_vector.i"
-
-%template(FloatVector) std::vector<float>;
-
-%apply int {mraa::Edge};
+%include "../upm_javastdvector.i"
 
 %{
 #include "mpu60x0.hpp"
 #include "mpu9150.hpp"
 %}
+
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Float;
+%}
+
+%typemap(javaout) upm::MPU60X0 {
+    return new $&javaclassname($jnicall, true);
+}
+%typemap(javaout) std::vector<float> {
+    return (AbstractList<Float>)(new $&javaclassname($jnicall, true));
+}
+%typemap(jstype) std::vector<float> "AbstractList<Float>"
+
+%template(floatVector) std::vector<float>;
+
+%ignore getAccelerometer(float *, float *, float *);
+%ignore getGyroscope(float *, float *, float *);
+%ignore getMagnetometer(float *, float *, float *);
+
 %include "mpu60x0.hpp"
 %include "mpu9150.hpp"
 

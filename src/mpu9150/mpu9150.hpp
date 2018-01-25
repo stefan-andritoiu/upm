@@ -27,6 +27,7 @@
 
 #include "mpu60x0.hpp"
 #include "ak8975.hpp"
+#include <vector>
 
 #define MPU9150_I2C_BUS 0
 #define MPU9150_DEFAULT_I2C_ADDR  MPU60X0_DEFAULT_I2C_ADDR

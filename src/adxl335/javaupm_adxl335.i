@@ -2,43 +2,43 @@
 %include "../upm.i"
 %include "cpointer.i"
 %include "typemaps.i"
-
-%apply int *OUTPUT { int *xVal, int *yVal, int *zVal };
-%apply float *OUTPUT { float *xAccel, float *yAccel, float *zAccel  };
+%include "../upm_javastdvector.i"
 
 %{
     #include "adxl335.hpp"
 %}
 
-%typemap(jni) float* "jfloatArray"
-%typemap(jstype) float* "float[]"
-%typemap(jtype) float* "float[]"
-
-%typemap(javaout) float* {
-    return $jnicall;
-}
-
-%typemap(out) float *acceleration {
-    $result = JCALL1(NewFloatArray, jenv, 3);
-    JCALL4(SetFloatArrayRegion, jenv, $result, 0, 3, $1);
-}
-
-%typemap(jni) int* "jintArray"
-%typemap(jstype) int* "int[]"
-%typemap(jtype) int* "int[]"
-
-%typemap(javaout) int* {
-    return $jnicall;
-}
-
-%typemap(out) int *values {
-    $result = JCALL1(NewIntArray, jenv, 3);
-    JCALL4(SetIntArrayRegion, jenv, $result, 0, 3, (const signed int*)$1);
-    delete [] $1;
-}
-
 %ignore values(int *, int *, int *);
 %ignore acceleration(float *, float *, float *);
+
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Float;
+import java.lang.Integer;
+%}
+
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Float;
+import java.lang.Integer;
+%}
+
+%typemap(javaout) upm::ADXL335 {
+    return new $&javaclassname($jnicall, true);
+}
+%typemap(javaout) std::vector<float> {
+    return (AbstractList<Float>)(new $&javaclassname($jnicall, true));
+}
+%typemap(jstype) std::vector<float> "AbstractList<Float>"
+
+%template(floatVector) std::vector<float>;
+
+%typemap(javaout) std::vector<int> {
+    return (AbstractList<Integer>)(new $&javaclassname($jnicall, true));
+}
+%typemap(jstype) std::vector<int> "AbstractList<Integer>"
+
+%template(intVector) std::vector<int>;
 
 %include "adxl335.hpp"
 

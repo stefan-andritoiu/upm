@@ -3,11 +3,24 @@
 %include "typemaps.i"
 %include "arrays_java.i";
 %include "../java_buffer.i"
-%include "std_vector.i"
+%include "../upm_javastdvector.i"
 
-%template(ShortVector) std::vector<short>;
+%typemap(javaimports) SWIGTYPE %{
+import java.util.AbstractList;
+import java.lang.Short;
+%}
 
-%apply short *OUTPUT { short * ptrX, short * ptrY, short * ptrZ };
+%typemap(javaout) upm::MMA7455 {
+    return new $&javaclassname($jnicall, true);
+}
+%typemap(javaout) std::vector<short> {
+    return (AbstractList<Short>)(new $&javaclassname($jnicall, true));
+}
+%typemap(jstype) std::vector<short> "AbstractList<Short>"
+
+%template(shortVector) std::vector<short>;
+
+%ignore readData(short *, short *, short *);
 
 %{
 #include "mma7455.hpp"
