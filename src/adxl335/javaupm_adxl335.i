@@ -17,13 +17,7 @@ import java.lang.Float;
 import java.lang.Integer;
 %}
 
-%typemap(javaimports) SWIGTYPE %{
-import java.util.AbstractList;
-import java.lang.Float;
-import java.lang.Integer;
-%}
-
-%typemap(javaout) upm::ADXL335 {
+%typemap(javaout) SWIGTYPE {
     return new $&javaclassname($jnicall, true);
 }
 %typemap(javaout) std::vector<float> {

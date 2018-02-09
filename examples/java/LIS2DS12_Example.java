@@ -23,6 +23,7 @@
  */
 
 import upm_lis2ds12.*;
+import java.util.AbstractList;
 
 public class LIS2DS12_Example
 {
@@ -42,7 +43,7 @@ public class LIS2DS12_Example
                 // update our values from the sensor
                 sensor.update();
 
-                floatVector dataA = sensor.getAccelerometer();
+                AbstractList<Float> dataA = sensor.getAccelerometer();
 
                 System.out.println("Accelerometer x: " + dataA.get(0)
                                    + " y: " + dataA.get(1)

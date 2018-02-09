@@ -27,6 +27,7 @@
  */
 
 import upm_lis3dh.*;
+import java.util.AbstractList;
 
 public class LIS3DH_Example
 {
@@ -46,6 +47,7 @@ public class LIS3DH_Example
                 // update our values from the sensor
                 sensor.update();
 
+                // AbstractList<Float> dataA = sensor.getAccelerometer();
                 floatVector dataA = sensor.getAccelerometer();
 
                 System.out.println("Accelerometer x: " + dataA.get(0)

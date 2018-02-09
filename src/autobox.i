@@ -2,6 +2,8 @@
 %define AUTOBOX(CTYPE, JTYPE)
 %typemap(autobox) CTYPE, const CTYPE&, CTYPE& "JTYPE"
 %enddef
+AUTOBOX(uint8_t, Short)
+AUTOBOX(unsigned char, Short)
 AUTOBOX(double, Double)
 AUTOBOX(float, Float)
 AUTOBOX(boolean, Boolean)

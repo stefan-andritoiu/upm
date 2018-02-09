@@ -23,6 +23,7 @@
  */
 
 import upm_lsm6dsl.*;
+import java.util.AbstractList;
 
 public class LSM6DSL_Example
 {
@@ -42,7 +43,7 @@ public class LSM6DSL_Example
                 // update our values from the sensor
                 sensor.update();
 
-                floatVector data = sensor.getAccelerometer();
+                AbstractList<Float> data = sensor.getAccelerometer();
 
                 System.out.println("Accelerometer x: " + data.get(0)
                                    + " y: " + data.get(1)
