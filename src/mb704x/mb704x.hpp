@@ -25,6 +25,7 @@
 
 #include <string>
 #include <iostream>
+#include <interfaces/iDistance.hpp>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -58,7 +59,7 @@ namespace upm {
      * @snippet mb704x.cxx Interesting
      */
 
-    class MB704X {
+    class MB704X : virtual public iDistance {
     public:
 
         /**
@@ -84,7 +85,7 @@ namespace upm {
          */
         int getRange();
 
-
+        virtual int getDistance();
     protected:
         // mb704x device context
         mb704x_context m_mb704x;

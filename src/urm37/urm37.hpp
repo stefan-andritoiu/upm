@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <interfaces/iDistance.hpp>
 
 #include "urm37.h"
 
@@ -76,7 +77,7 @@ namespace upm {
      * @snippet urm37-uart.cxx Interesting
      */
 
-  class URM37 {
+  class URM37 : virtual public iDistance {
   public:
 
     /**
@@ -119,7 +120,9 @@ namespace upm {
      * ignored in analog mode.
      * @return The measured distance in cm
      */
-    float getDistance(int degrees=0);
+    float getDistance(int degrees);
+
+    virtual int getDistance();
 
     /**
      * Get the temperature measurement.  This is only valid in UART mode.
