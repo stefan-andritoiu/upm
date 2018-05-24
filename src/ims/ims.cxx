@@ -55,6 +55,11 @@ uint16_t IMS::get_moisture()
     return retval;
 }
 
+int IMS::getMoisture()
+{
+  return get_moisture();
+}
+
 uint16_t IMS::get_light()
 {
     uint16_t retval;

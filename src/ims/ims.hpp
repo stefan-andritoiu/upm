@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include <interfaces/iMoisture.hpp>
 #include "ims.h"
 
 namespace upm {
@@ -55,7 +56,7 @@ namespace upm {
  * @snippet ims.cxx Interesting
  */
 
-class IMS {
+class IMS : virtual public iMoisture {
     public:
         /**
          * I2C Moisture Sensor constructor
@@ -102,6 +103,8 @@ class IMS {
          * @throws std::runtime_error if I2C read command fails
          */
         uint16_t get_moisture();
+
+        virtual int getMoisture();
 
         /**
          * Get light reading from LED on device.  The technical data for the I2C
