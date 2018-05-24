@@ -25,6 +25,7 @@
 
 #include <string>
 #include <mraa/uart.hpp>
+#include <interfaces/iHumidity.hpp>
 
 namespace upm {
 
@@ -53,7 +54,7 @@ namespace upm {
    * @snippet rhusb.cxx Interesting
    */
 
-  class RHUSB {
+  class RHUSB : virtual public iHumidity {
   public:
     /**
      * RHUSB constructor
@@ -91,7 +92,7 @@ namespace upm {
      *
      * @return The last humidity reading
      */
-    float getHumidity();
+    virtual float getHumidity();
 
     /**
      * Get the firmware identification string.

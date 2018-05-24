@@ -26,6 +26,7 @@
 #include <string>
 
 #include <modbus/modbus.h>
+#include <interfaces/iHumidity.hpp>
 
 namespace upm {
 
@@ -64,7 +65,7 @@ namespace upm {
    * @snippet hwxpxx.cxx Interesting
    */
 
-  class HWXPXX {
+  class HWXPXX : virtual public iHumidity {
   public:
     // MODBUS input registers
     typedef enum {
@@ -136,7 +137,7 @@ namespace upm {
      *
      * @return The last humidity reading
      */
-    float getHumidity();
+    virtual float getHumidity();
 
     /**
      * Get the current slider switch position.  update() must have

@@ -108,6 +108,12 @@ HTU21D::getHumidity(int bSampleData)
     return (float)m_humidity / 1000;
 }
 
+float
+HTU21D::getHumidity()
+{
+    return getHumidity(0);
+}
+
 /*
  * Use the compensation equation from the datasheet to correct the
  * current reading

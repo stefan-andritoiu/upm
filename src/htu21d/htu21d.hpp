@@ -26,6 +26,7 @@
 #include <string>
 #include <mraa/i2c.hpp>
 #include <math.h>
+#include <interfaces/iHumidity.hpp>
 
 #define HTU21D_NAME "htu21d"
 #define HTU21D_I2C_ADDRESS 0x40
@@ -79,7 +80,7 @@ namespace upm {
  * @image html htu21d.jpeg
  * @snippet htu21d.cxx Interesting
  */
-class HTU21D {
+class HTU21D : virtual public iHumidity {
     public:
         /**
          * Instantiates an HTU21D object
@@ -102,7 +103,9 @@ class HTU21D {
          * @param bSampleData Flag to sample sensor (default false)
          * @return Relative humidity in %RH
          */
-        float getHumidity(int bSampleData = false);
+        float getHumidity(int bSampleData);
+
+        virtual float getHumidity();
 
         /**
          * Gets the humidity cell temperature [degC]

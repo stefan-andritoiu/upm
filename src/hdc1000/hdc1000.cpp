@@ -133,3 +133,9 @@ HDC1000::getHumidity(int bSampleData)
     }
     return (float)(m_humidity * 0.01);
 }
+
+float
+HDC1000::getHumidity()
+{
+  return getHumidity(false);
+}

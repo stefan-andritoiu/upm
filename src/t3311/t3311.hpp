@@ -26,6 +26,7 @@
 #include <string>
 
 #include <modbus/modbus.h>
+#include <interfaces/iHumidity.hpp>
 
 namespace upm {
 
@@ -60,7 +61,7 @@ namespace upm {
    * @snippet t3311.cxx Interesting
    */
 
-  class T3311 {
+  class T3311 : virtual public iHumidity {
   public:
 
     // MODBUS input registers
@@ -156,7 +157,7 @@ namespace upm {
      *
      * @return The last humidity reading
      */
-    float getHumidity();
+    virtual float getHumidity();
 
     /**
      * Get the current computed value.  update() must have been

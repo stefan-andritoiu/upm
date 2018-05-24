@@ -28,6 +28,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <interfaces/iHumidity.hpp>
 
 #include "sht1x.h"
 
@@ -58,7 +59,7 @@ namespace upm {
    * @snippet sht1x.cxx Interesting
    */
 
-  class SHT1X {
+  class SHT1X : virtual public iHumidity {
   public:
 
     /**
@@ -99,7 +100,7 @@ namespace upm {
      *
      * @return The relative humidity.
      */
-    float getHumidity();
+    virtual float getHumidity();
 
     /**
      * Read the status register.
