@@ -59,7 +59,7 @@ namespace upm {
      * @snippet lm35.cxx Interesting
      */
 
-    class LM35 : virtual public iTemperature{
+    class LM35 : virtual public iTemperature {
     public:
 
         /**

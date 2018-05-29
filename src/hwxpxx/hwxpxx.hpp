@@ -27,6 +27,7 @@
 
 #include <modbus/modbus.h>
 #include <interfaces/iHumidity.hpp>
+#include <interfaces/iTemperature.hpp>
 
 namespace upm {
 
@@ -65,7 +66,7 @@ namespace upm {
    * @snippet hwxpxx.cxx Interesting
    */
 
-  class HWXPXX : virtual public iHumidity {
+  class HWXPXX : virtual public iHumidity, virtual public iTemperature {
   public:
     // MODBUS input registers
     typedef enum {
@@ -129,7 +130,9 @@ namespace upm {
      * The default is false (degrees Celsius).
      * @return The last temperature reading in Celsius or Fahrenheit
      */
-    float getTemperature(bool fahrenheit=false);
+    float getTemperature(bool fahrenheit);
+
+    virtual float getTemperature();
 
     /**
      * Get the current relative humidity.  update() must have been called

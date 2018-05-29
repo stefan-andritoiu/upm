@@ -181,6 +181,11 @@ int MS5611::getTemperatureCelsius()
     return (temp + 50) / 100;
 }
 
+float MS5611::getTemperature()
+{
+    return getTemperatureCelsius();
+}
+
 
 int MS5611::getPressurePa()
 {

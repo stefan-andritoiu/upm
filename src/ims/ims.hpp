@@ -25,6 +25,7 @@
 #pragma once
 
 #include <interfaces/iMoisture.hpp>
+#include <interfaces/iTemperature.hpp>
 #include "ims.h"
 
 namespace upm {
@@ -56,7 +57,7 @@ namespace upm {
  * @snippet ims.cxx Interesting
  */
 
-class IMS : virtual public iMoisture {
+class IMS : virtual public iMoisture, virtual public iTemperature {
     public:
         /**
          * I2C Moisture Sensor constructor
@@ -124,6 +125,8 @@ class IMS : virtual public iMoisture {
          * @throws std::runtime_error if I2C read command fails
          */
         float get_temperature();
+
+        virtual float getTemperature();
 
         /**
          * Reset sensor

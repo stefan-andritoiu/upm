@@ -28,6 +28,7 @@
 #include <vector>
 
 #include <mraa/aio.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #define TEX00_DEFAULT_AREF 5.0
 
@@ -74,7 +75,7 @@ namespace upm {
      * @snippet tex00.cxx Interesting
      */
 
-  class TEX00 {
+  class TEX00 : virtual public iTemperature {
   public:
 
     typedef enum {
@@ -126,7 +127,9 @@ namespace upm {
      * The default is false (degrees Celsius).
      * @return The last temperature reading in Celsius or Fahrenheit
      */
-    float getTemperature(bool fahrenheit=false);
+    float getTemperature(bool fahrenheit);
+
+    virtual float getTemperature();
 
     /**
      * Return the smallest temperature that can be measured by the

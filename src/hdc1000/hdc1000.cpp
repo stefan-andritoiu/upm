@@ -126,6 +126,12 @@ HDC1000::getTemperature(int bSampleData)
 }
 
 float
+HDC1000::getTemperature()
+{
+    return getTemperature(false);
+}
+
+float
 HDC1000::getHumidity(int bSampleData)
 {
     if (bSampleData) {

@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <interfaces/iHumidity.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #include "sht1x.h"
 
@@ -59,7 +60,7 @@ namespace upm {
    * @snippet sht1x.cxx Interesting
    */
 
-  class SHT1X : virtual public iHumidity {
+  class SHT1X : virtual public iHumidity, virtual public iTemperature {
   public:
 
     /**
@@ -92,7 +93,7 @@ namespace upm {
      *
      * @return The temperature in Celsius
      */
-    float getTemperature();
+    virtual float getTemperature();
 
     /**
      * Query the relative humidity.  update() must have been called

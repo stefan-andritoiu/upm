@@ -30,6 +30,7 @@
 #include <mraa/i2c.hpp>
 #include <math.h>
 #include <interfaces/iHumidity.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #define HDC1000_NAME "hdc1000"
 #define HDC1000_i2C_ADDRESS         0x43
@@ -88,7 +89,7 @@ namespace upm {
  *
  * @snippet hdc1000.cxx Interesting
  */
-class HDC1000 : virtual public iHumidity {
+class HDC1000 : virtual public iHumidity, virtual public iTemperature {
     public:
         /**
          * Instantiates an HDC1000 object
@@ -134,7 +135,9 @@ class HDC1000 : virtual public iHumidity {
          * @param bSampleData Flag to read sensor
          * @return The humidity sensor temp in degC
          */
-        float getTemperature(int bSampleData = false);
+        float getTemperature(int bSampleData);
+
+        virtual float getTemperature();
 
     private:
 

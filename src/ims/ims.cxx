@@ -78,6 +78,11 @@ float IMS::get_temperature()
     return static_cast<float>(retval)/10.0;
 }
 
+float IMS::getTemperature()
+{
+    return get_temperature();
+}
+
 void IMS::reset_i2c_address(uint8_t address_new)
 {
     if (ims_reset_i2c_address(_dev, address_new) != UPM_SUCCESS)

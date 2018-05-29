@@ -23,6 +23,7 @@
  */
 
 #include <interfaces/iPressure.hpp>
+#include <interfaces/iTemperature.hpp>
 #include "mraa/i2c.hpp"
 
 namespace upm
@@ -57,7 +58,7 @@ namespace upm
  * @snippet ms5611.cxx Interesting
  */
 
-class MS5611 : virtual public iPressure
+class MS5611 : virtual public iPressure, virtual public iTemperature
 {
 public:
    enum OsrMode
@@ -70,6 +71,7 @@ public:
    virtual const char* getModuleName() { return "ms5611"; }
    void setOverSampling(OsrMode osrMode);
    int getTemperatureCelsius();
+   virtual float getTemperature();
    int getPressurePa();
    virtual float getPressure();
 

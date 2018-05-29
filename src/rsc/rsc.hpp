@@ -27,6 +27,7 @@
 #include "rsc.h"
 #include <string>
 #include <interfaces/iPressure.hpp>
+#include <interfaces/iTemperature.hpp>
 
 namespace upm {
     /**
@@ -75,7 +76,7 @@ namespace upm {
      *
      * @snippet rsc.cxx Interesting
      */
-    class RSC : virtual public iPressure {
+    class RSC : virtual public iPressure, virtual public iTemperature {
 
     public:
         /**
@@ -195,7 +196,7 @@ namespace upm {
          *
          * @return float compensated temperature value
          */
-        float getTemperature();
+        virtual float getTemperature();
 
         /**
          * Function to get the compensated pressure value

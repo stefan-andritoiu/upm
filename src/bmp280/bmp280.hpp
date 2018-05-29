@@ -29,6 +29,7 @@
 #include "bmp280.h"
 
 #include <interfaces/iPressure.hpp>
+#include <interfaces/iTemperature.hpp>
 
 namespace upm {
 
@@ -66,7 +67,7 @@ namespace upm {
      * @snippet bmp280.cxx Interesting
      */
 
-    class BMP280 : virtual public iPressure {
+    class BMP280 : virtual public iPressure, virtual public iTemperature {
     public:
 
         /**
@@ -126,7 +127,9 @@ namespace upm {
          * Celicus.  Celsius is the default.
          * @return The temperature in degrees Celsius or Fahrenheit.
          */
-        float getTemperature(bool fahrenheit=false);
+        float getTemperature(bool fahrenheit);
+
+        virtual float getTemperature();
 
         /**
          * Return the current measured pressure in Pascals (Pa).  update()

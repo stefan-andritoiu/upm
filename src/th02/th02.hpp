@@ -29,6 +29,7 @@
 #include <string>
 #include <mraa/i2c.hpp>
 #include <interfaces/iHumidity.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #define TH02_ADDR                0x40 // device address
 
@@ -70,7 +71,7 @@ namespace upm {
  * @image html th02.jpg
  * @snippet th02.cxx Interesting
  */
-class TH02 : virtual public iHumidity {
+class TH02 : virtual public iHumidity, virtual public iTemperature {
     public:
         /**
          * Instantiates a TH02 object
@@ -85,7 +86,7 @@ class TH02 : virtual public iHumidity {
         /**
          * Gets the temperature value from the sensor.
          */
-        float getTemperature ();
+        virtual float getTemperature ();
 
         /**
          * Gets the humidity value from the sensor.

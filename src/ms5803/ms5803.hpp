@@ -25,6 +25,7 @@
 
 #include <string>
 #include <interfaces/iPressure.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #include "ms5803.h"
 
@@ -65,7 +66,7 @@ namespace upm {
      *
      * @snippet ms5803.cxx Interesting
      */
-    class MS5803 : virtual public iPressure {
+    class MS5803 : virtual public iPressure, virtual public iTemperature {
     public:
 
         /**
@@ -131,7 +132,7 @@ namespace upm {
          *
          * @return Temperature in degrees C
          */
-        float getTemperature();
+        virtual float getTemperature();
 
         /**
          * Return the latest measured pressure.  update() must have

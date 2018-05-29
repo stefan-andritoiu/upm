@@ -27,6 +27,7 @@
 #include <mraa/i2c.h>
 #include <math.h>
 #include <interfaces/iHumidity.hpp>
+#include <interfaces/iTemperature.hpp>
 
 #define AM2315_NAME "am2315"
 #define AM2315_I2C_ADDRESS 0x5c
@@ -78,7 +79,7 @@ namespace upm {
  * @image html am2315.jpeg
  * @snippet am2315.cxx Interesting
  */
-class AM2315 : virtual public iHumidity {
+class AM2315 : virtual public iHumidity, virtual public iTemperature {
     public:
         /**
          * Instantiates an AM2315 object
@@ -107,7 +108,7 @@ class AM2315 : virtual public iHumidity {
          * Data is updated every 2 seconds - accesses occurring more often than
          * that return cached data
          */
-        float getTemperature(void);
+        virtual float getTemperature(void);
 
         /**
          * Gets the humidity cell temperature [degF]

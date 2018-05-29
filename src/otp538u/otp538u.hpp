@@ -25,6 +25,7 @@
 
 #include <string>
 #include <otp538u.h>
+#include <interfaces/iTemperature.hpp>
 
 namespace upm {
 
@@ -73,7 +74,7 @@ namespace upm {
      * @image html otp538u.jpg
      * @snippet otp538u.cxx Interesting
      */
-    class OTP538U {
+    class OTP538U : virtual public iTemperature {
     public:
         /**
          * OTP538U constructor
@@ -95,6 +96,8 @@ namespace upm {
          * @return Ambient temperature
          */
         float ambientTemperature();
+
+        virtual float getTemperature();
 
         /**
          * Gets the object temperature in Celsius
