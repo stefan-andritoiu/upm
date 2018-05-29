@@ -24,6 +24,7 @@
 #pragma once
 
 #include <string>
+#include <interfaces/iPressure.hpp>
 
 #include "ms5803.h"
 
@@ -64,7 +65,7 @@ namespace upm {
      *
      * @snippet ms5803.cxx Interesting
      */
-    class MS5803 {
+    class MS5803 : virtual public iPressure {
     public:
 
         /**
@@ -139,7 +140,7 @@ namespace upm {
          *
          * @return Pressure in mbar
          */
-        float getPressure();
+        virtual float getPressure();
 
     protected:
         ms5803_context m_ms5803;

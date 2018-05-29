@@ -26,6 +26,7 @@
 
 #include "rsc.h"
 #include <string>
+#include <interfaces/iPressure.hpp>
 
 namespace upm {
     /**
@@ -74,7 +75,7 @@ namespace upm {
      *
      * @snippet rsc.cxx Interesting
      */
-    class RSC {
+    class RSC : virtual public iPressure {
 
     public:
         /**
@@ -201,7 +202,7 @@ namespace upm {
          *
          * @return float compensated pressure value
          */
-        float getPressure();
+        virtual float getPressure();
 
         /**
          * Function to set the mode for the RSC sensor:

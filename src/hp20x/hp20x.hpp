@@ -26,6 +26,7 @@
 #include <string>
 #include <mraa/common.hpp>
 #include <mraa/i2c.hpp>
+#include <interfaces/iPressure.hpp>
 
 #define HP20X_I2C_BUS 0
 #define HP20X_DEFAULT_I2C_ADDR 0x76
@@ -61,7 +62,7 @@ namespace upm {
    * @image html hp20x.jpg
    * @snippet hp20x.cxx Interesting
    */
-  class HP20X {
+  class HP20X : virtual public iPressure {
   public:
 
     /**
@@ -277,7 +278,7 @@ namespace upm {
      *
      * @return Pressure
      */
-    float getPressure();
+    virtual float getPressure();
 
     /**
      * Returns the computed altitude in meters

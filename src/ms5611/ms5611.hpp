@@ -22,8 +22,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "interfaces/iPressureSensor.hpp"
-#include "interfaces/iTemperatureSensor.hpp"
+#include <interfaces/iPressure.hpp>
 #include "mraa/i2c.hpp"
 
 namespace upm
@@ -58,7 +57,7 @@ namespace upm
  * @snippet ms5611.cxx Interesting
  */
 
-class MS5611 : public IPressureSensor, public ITemperatureSensor
+class MS5611 : virtual public iPressure
 {
 public:
    enum OsrMode
@@ -72,6 +71,7 @@ public:
    void setOverSampling(OsrMode osrMode);
    int getTemperatureCelsius();
    int getPressurePa();
+   virtual float getPressure();
 
 private:
    /* Disable implicit copy and assignment operators */

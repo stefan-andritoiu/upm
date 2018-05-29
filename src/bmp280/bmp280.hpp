@@ -28,8 +28,7 @@
 #include <string>
 #include "bmp280.h"
 
-#include "interfaces/iPressureSensor.hpp"
-#include "interfaces/iTemperatureSensor.hpp"
+#include <interfaces/iPressure.hpp>
 
 namespace upm {
 
@@ -67,7 +66,7 @@ namespace upm {
      * @snippet bmp280.cxx Interesting
      */
 
-    class BMP280 : public ITemperatureSensor, public IPressureSensor {
+    class BMP280 : virtual public iPressure {
     public:
 
         /**
@@ -135,7 +134,7 @@ namespace upm {
          *
          * @return The pressure in Pascals (Pa).
          */
-        float getPressure();
+        virtual float getPressure();
 
         /**
          * Set the pressure at sea level in hecto-Pascals (hPA).  This
