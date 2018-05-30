@@ -26,7 +26,7 @@
 #include <string>
 #include <mraa/i2c.hpp>
 
-#include "interfaces/iLightSensor.hpp"
+#include <interfaces/iLight.hpp>
 
 /* ADDRESS AND NOT_FOUND VALUE */
 #define MAX44009_ADDRESS                    ( 0x4A )
@@ -106,7 +106,7 @@ namespace upm {
  * @snippet max44009.cxx Interesting
  *
  */
-class MAX44009 : public ILightSensor {
+class MAX44009 : virtual public iLight {
     public:
         /**
          * Instanciates a MAX44009 object
@@ -130,6 +130,8 @@ class MAX44009 : public ILightSensor {
          * Read the lux value
          */
         double getVisibleLux();
+
+        virtual float getLuminance();
 
         virtual const char* getModuleName() { return "max44009"; }
 
