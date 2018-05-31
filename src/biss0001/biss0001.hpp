@@ -82,7 +82,7 @@ namespace upm {
       /**
        * Gets the motion value from the sensor.  This is a more
        * informative method name, but we want to keep compatibility
-       * with the original for now.
+       * with the original for now. Implements iMotion interface.
        *
        * @return true if motion was detected, false otherwise.
        */

@@ -2,6 +2,9 @@
 
 namespace upm
 {
+/**
+* @brief Interface for Motion Sensors
+*/
   class iMotion
   {
   public:
