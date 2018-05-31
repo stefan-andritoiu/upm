@@ -24,45 +24,15 @@
 
 #pragma once
 
-#include <stdexcept>
-
 namespace upm
 {
-  enum class DistanceUnit { CM, INCH };
 /**
 * @brief Interface for Distance Measuring Sensors
 */
-  class iDistance
-  {
-  public:
-    virtual ~iDistance() {}
-    virtual int getDistance() = 0;
-    /**
-      * Convert distance value from Cm(default) to one
-      * of the following:
-      *
-      * 1. Inch
-      *
-      * @param cmValue Cm distance value
-      * @param unit The distance unit for the conversion.
-      * @return The converted distance value
-      */
-    static float convertCmTo(float cmValue, DistanceUnit unit)
+    class iDistance
     {
-      float convertedValue = cmValue;
-
-      switch (unit)
-      {
-        case DistanceUnit::CM:
-          break;
-        case DistanceUnit::INCH:
-          convertedValue *= 0.3937f;
-          break;
-        default:
-          throw std::invalid_argument("invalid distance unit");
-      }
-
-      return convertedValue;
-    }
-  };
+    public:
+        virtual ~iDistance() {}
+        virtual int getDistance() = 0;
+    };
 }
