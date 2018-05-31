@@ -14,7 +14,7 @@ main()
 {
   vector<unique_ptr<iLight>> lightSensors;
 
-  // Pop  ulate list of light sensors
+  // Populate list of light sensors
   lightSensors.push_back(unique_ptr<iLight>(new APDS9002(0)));
   lightSensors.push_back(unique_ptr<iLight>(new BH1750()));
   lightSensors.push_back(unique_ptr<iLight>(new MAX44009(1)));
