@@ -178,6 +178,11 @@ namespace upm {
              */
             float getTemp(void);
 
+            /**
+             * Returns the temperature in degrees Celsius
+             *
+             * @return The Temperature in degrees Celsius
+             */
             virtual float getTemperature();
 
             /**

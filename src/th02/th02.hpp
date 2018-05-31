@@ -84,12 +84,16 @@ class TH02 : virtual public iHumidity, virtual public iTemperature {
         ~TH02 ();
 
         /**
-         * Gets the temperature value from the sensor.
+         * Get the current temperature.
+         *
+         * @return The last temperature reading in Celsius
          */
         virtual float getTemperature ();
 
         /**
-         * Gets the humidity value from the sensor.
+         * Get the current relative humidity.
+         *
+         * @return The last humidity reading
          */
         virtual float getHumidity ();
 

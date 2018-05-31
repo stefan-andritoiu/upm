@@ -152,6 +152,12 @@ namespace upm {
      */
     float getTemperature(bool fahrenheit);
 
+    /**
+     * Get the current temperature.  update() must have been called
+     * prior to calling this method.
+     *
+     * @return The last temperature reading in Celsius
+     */
     virtual float getTemperature();
 
     /**

@@ -76,6 +76,11 @@ namespace upm {
      */
     int value();
 
+    /**
+     * Gets the moisture value from the sensor
+     *
+     * @return Moisture reading
+     */
     virtual int getMoisture();
 
   private:

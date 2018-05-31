@@ -106,6 +106,11 @@ class HTU21D : virtual public iHumidity, virtual public iTemperature {
          */
         float getHumidity(int bSampleData);
 
+        /**
+         * Gets the current measured humidity [%RH]
+         *
+         * @return Relative humidity in %RH
+         */
         virtual float getHumidity();
 
         /**
@@ -116,6 +121,11 @@ class HTU21D : virtual public iHumidity, virtual public iTemperature {
          */
         float getTemperature(int bSampleData);
 
+        /**
+         * Gets the humidity cell temperature [degC]
+         *
+         * @return Temperature in degC
+         */
         virtual float getTemperature();
 
         /**

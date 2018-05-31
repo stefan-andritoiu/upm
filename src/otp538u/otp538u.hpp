@@ -97,6 +97,11 @@ namespace upm {
          */
         float ambientTemperature();
 
+        /**
+         * Gets the ambient temperature in Celsius
+         *
+         * @return Ambient temperature
+         */
         virtual float getTemperature();
 
         /**

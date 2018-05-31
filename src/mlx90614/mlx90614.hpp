@@ -110,6 +110,11 @@ class MLX90614 : virtual public iTemperature {
          */
         float readAmbientTempC(void);
 
+        /**
+         * Returns the temperature in degrees Celsius
+         *
+         * @return The Temperature in degrees Celsius
+         */
         virtual float getTemperature();
 
         /**

@@ -129,6 +129,14 @@ namespace upm {
          */
         float getTemperature(bool fahrenheit);
 
+        /**
+         * Return the current measured temperature.  Note, this is not
+         * ambient temperature - this is the temperature used to fine tune
+         * the pressure measurement.  update() must have been called prior
+         * to calling this method.
+         *
+         * @return The temperature in degrees Celsius.
+         */
         virtual float getTemperature();
 
         /**

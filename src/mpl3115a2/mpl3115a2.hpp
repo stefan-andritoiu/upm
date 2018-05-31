@@ -144,6 +144,11 @@ class MPL3115A2 : virtual public iPressure {
          */
         float getPressure(int bSampleData);
 
+        /**
+         * Reads the current pressure value from MPL3115A2 [Pa]
+         *
+         * @return Pressure value in Pa
+         */
         virtual float getPressure();
 
         /**

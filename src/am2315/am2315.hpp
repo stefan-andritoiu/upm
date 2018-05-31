@@ -107,6 +107,8 @@ class AM2315 : virtual public iHumidity, virtual public iTemperature {
          *
          * Data is updated every 2 seconds - accesses occurring more often than
          * that return cached data
+         *
+         * @return float compensated temperature value
          */
         virtual float getTemperature(void);
 

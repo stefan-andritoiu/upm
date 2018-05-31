@@ -127,6 +127,11 @@ class HDC1000 : virtual public iHumidity, virtual public iTemperature {
          */
         float getHumidity(int bSampleData);
 
+        /**
+         * Get the current measured humidity [RH]
+         *
+         * @return The humidity sensor temp in degC
+         */
         virtual float getHumidity();
 
         /**
@@ -137,6 +142,11 @@ class HDC1000 : virtual public iHumidity, virtual public iTemperature {
          */
         float getTemperature(int bSampleData);
 
+        /**
+         * Get the humidity cell temperature [degC]
+         *
+         * @return The humidity sensor temp in degC
+         */
         virtual float getTemperature();
 
     private:

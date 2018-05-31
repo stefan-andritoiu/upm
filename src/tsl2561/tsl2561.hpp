@@ -140,6 +140,11 @@ class TSL2561 : virtual public iLight {
         */
         int getLux();
 
+        /**
+         * Gets the calculated lux reading from TSL2561
+         *
+         * @return Calculated lux value from the sensor
+         */
         virtual float getLuminance();
 
     private:

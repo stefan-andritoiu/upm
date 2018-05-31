@@ -71,6 +71,11 @@ class HCSR04 : virtual public iDistance {
          */
         double getDistance (HCSR04_U unit);
 
+        /**
+         * Gets the distance from the sensor
+         *
+         * @return distance measured in cm.
+         */
         virtual int getDistance();
     private:
         hcsr04_context m_hcsr04;

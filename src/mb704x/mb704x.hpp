@@ -85,6 +85,11 @@ namespace upm {
          */
         int getRange();
 
+        /**
+         * Gets the distance to the object in cm
+         *
+         * @return Distance to the object in cm
+         */
         virtual int getDistance();
     protected:
         // mb704x device context

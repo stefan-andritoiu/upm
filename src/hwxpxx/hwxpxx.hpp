@@ -132,6 +132,14 @@ namespace upm {
      */
     float getTemperature(bool fahrenheit);
 
+    /**
+     * Get the current temperature.  update() must have been called
+     * prior to calling this method.  If this option was not
+     * installed, this method will always return 0C/0F, depending on
+     * the scale the device is operating in natively.
+     *
+     * @return The last temperature reading in Celsius or Fahrenheit
+     */
     virtual float getTemperature();
 
     /**

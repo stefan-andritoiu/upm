@@ -80,6 +80,11 @@ class GroveLight: public Grove, virtual public iLight {
          */
         int value();
 
+        /**
+         * Gets an approximate light value, in lux, from the sensor
+         *
+         * @return Normalized light reading in lux
+         */
         virtual float getLuminance();
     private:
         mraa_aio_context m_aio;

@@ -72,6 +72,11 @@ namespace upm {
      */
     int value();
 
+    /**
+     * Gets the luminance value from the sensor
+     *
+     * @return The measured light intensity value in Lux
+     */
     virtual float getLuminance();
 
   private:

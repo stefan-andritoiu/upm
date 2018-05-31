@@ -86,7 +86,9 @@ class MAX31723 : virtual public iTemperature {
          **/
 
         /**
-         * Gets the on-board temperature.
+         * Returns the temperature in degrees Celsius
+         *
+         * @return The Temperature in degrees Celsius
          */
         virtual float getTemperature ();
 

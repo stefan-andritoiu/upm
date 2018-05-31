@@ -80,6 +80,11 @@ class SI1132 : virtual public iLight {
          */
         double getVisibleLux();
 
+        /**
+         * Gets the luminance value from the sensor
+         *
+         * @return The measured light intensity value in Lux
+         */
         virtual float getLuminance();
 
         virtual const char* getModuleName() { return "si1132"; }

@@ -123,6 +123,12 @@ namespace upm {
      */
     float getDistance(int degrees);
 
+    /**
+     * Get the distance measurement.  A return value of 65535.0
+     * in UART mode indicates an invalid measurement.
+     *
+     * @return The measured distance in cm
+     */
     virtual int getDistance();
 
     /**

@@ -98,6 +98,11 @@ class Temperature : virtual public iTemperature {
          */
         int value();
 
+        /**
+         * Gets the temperature in Celsius from the sensor
+         *
+         * @return Normalized temperature in Celsius
+         */
         virtual float getTemperature();
     private:
         mraa_aio_context m_aio;

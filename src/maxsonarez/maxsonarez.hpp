@@ -91,6 +91,11 @@ namespace upm {
      */
     int inches();
 
+    /**
+     * Gets the distance to the object in inches
+     *
+     * @return Distance to the object in inches
+     */
     virtual int getDistance();
 
   private:

@@ -64,7 +64,7 @@ namespace upm {
      */
     ~Collision();
     /**
-     * @return bool  Defines whether something is colliding with sensor
+     * @return boolean value defining whether something is colliding with sensor
      */
     virtual bool isColliding();
 

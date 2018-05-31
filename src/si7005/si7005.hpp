@@ -84,6 +84,11 @@ class SI7005 : virtual public iTemperature, virtual public iHumidity {
          */
         int getTemperatureCelsius ();
 
+        /**
+         * Get the current temperature.
+         *
+         * @return The last temperature reading in Celsius
+         */
         virtual float getTemperature();
 
         /**
@@ -96,6 +101,11 @@ class SI7005 : virtual public iTemperature, virtual public iHumidity {
          */
         int getHumidityRelative ();
 
+        /**
+         * Get the current relative humidity.
+         *
+         * @return The last humidity reading
+         */
         virtual float getHumidity();
 
         /**

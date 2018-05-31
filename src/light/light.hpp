@@ -92,6 +92,12 @@ namespace upm {
          */
         int value();
 
+        /**
+         * Gets an approximate light value in lux from the sensor
+         *
+         * @return Approximate light reading in lux
+         * @throws std::runtime_error on error
+         */
         virtual float getLuminance();
 
         /**
