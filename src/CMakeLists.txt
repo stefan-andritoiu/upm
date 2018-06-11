@@ -900,11 +900,7 @@ function(upm_module_init)
   # Install interface file if it exists
   if(DEFINED module_iface)
     set(iface_path ${PROJECT_SOURCE_DIR}/include/interfaces)
-    set(iface_files "")
-    foreach(iface ${module_iface})
-      LIST(APPEND iface_files "${iface_path}/${iface}")
-    endforeach(iface ${module_iface})    
-    install (FILES ${iface_files}
+    install (FILES ${iface_path}/${module_iface}
       DESTINATION include/upm/interfaces
       COMPONENT ${CMAKE_PROJECT_NAME}-dev)
   endif(DEFINED module_iface)
