@@ -34,11 +34,6 @@ namespace upm
   public:
     virtual ~iProximity() {}
 
-    /**
-     * Get proximity value from sensor data.
-     *
-     * @return Proximity value as volts.
-     */
     virtual float getValue() = 0;
   };
 }
