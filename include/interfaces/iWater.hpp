@@ -1,5 +1,5 @@
 /*
- * Author: Stefan Andritoiu <stefan.andritoiu@gmail.com>
+ * Author: Mihai Stefanescu <mihai.stefanescu@rinftech.com>
  * Copyright (c) 2018 Intel Corporation.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
