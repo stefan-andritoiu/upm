@@ -1,7 +1,4 @@
-#ifdef SWIGPYTHON
-%module (package="upm") sht1x
-#endif
-
+%module (package="pyupm_new_interfaces") sht1x
 %import "interfaces/new_interfaces.i"
 
 %include "../common_top.i"

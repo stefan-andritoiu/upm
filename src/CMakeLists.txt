@@ -254,15 +254,9 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
       # And the SWIG import string
       string(REPLACE "#" "%" SWIG_PERCENT_INCLUDES "${SWIG_HASH_INCLUDES}")
       if(module_iface)
-        # Set up Python bindings
-        set(PYTHON_NEW_INTERFACES "#ifdef SWIGPYTHON\n")
-        string(APPEND PYTHON_NEW_INTERFACES "%module (package=\"pyupm_new_interfaces\") ${libname}\n")
-        string(APPEND PYTHON_NEW_INTERFACES "#endif")
-        # Include interfaces
-        set(IMPORT_NEW_INTERFACES "%import \"interfaces/new_interfaces.i\"")
-        # Set up Java bindings
-        string(APPEND JAVA_TYPEMAPS "%typemap(javaimports) SWIGTYPE %{\n")
-        string(APPEND JAVA_TYPEMAPS "import upm_new_interfaces.*;\n%}")
+        foreach(_iface ${module_iface})
+          set(SWIG_PERCENT_INCLUDES "%import \"interfaces/${_iface}\"")
+        endforeach(_iface ${module_iface})        
       endif()
       # Write the interface file
       configure_file (${PROJECT_SOURCE_DIR}/src/swigme.i.in "${${varDotIFile}}" @ONLY)
@@ -900,7 +894,11 @@ function(upm_module_init)
   # Install interface file if it exists
   if(DEFINED module_iface)
     set(iface_path ${PROJECT_SOURCE_DIR}/include/interfaces)
-    install (FILES ${iface_path}/${module_iface}
+    set(iface_files "")
+    foreach(iface ${module_iface})
+      LIST(APPEND iface_files "${iface_path}/${iface}")
+    endforeach(iface ${module_iface})    
+    install (FILES ${iface_files}
       DESTINATION include/upm/interfaces
       COMPONENT ${CMAKE_PROJECT_NAME}-dev)
   endif(DEFINED module_iface)
