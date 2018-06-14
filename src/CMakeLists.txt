@@ -254,7 +254,11 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
           set(SWIG_HASH_INCLUDES "#include \"${_hpp}\"")
       endforeach()
       string(REPLACE "#" "%" SWIG_PERCENT_INCLUDES "${SWIG_HASH_INCLUDES}")
-
+      if(module_iface)
+        foreach(_iface ${module_iface})
+          set(SWIG_PERCENT_INCLUDES "%import \"interfaces/${_iface}\"")
+        endforeach(_iface ${module_iface})        
+      endif()
       # Write the interface file
       configure_file (${PROJECT_SOURCE_DIR}/src/swigme.i.in "${${varDotIFile}}" @ONLY)
   endif()
@@ -272,7 +276,8 @@ macro(_upm_swig_python)
 
   include_directories (${CMAKE_CURRENT_SOURCE_DIR}
                        ${CMAKE_CURRENT_BINARY_DIR}/..
-                       ${DEPEND_DIRS})
+                       ${DEPEND_DIRS}
+                       ${UPM_COMMON_HEADER_DIRS})
 
   # Decide between ${libname}.i or a language-specific .i
   _get_current_dot_i_file(pyupm SWIG_CURRENT_DOT_I_FILE)
@@ -306,6 +311,11 @@ macro(_upm_swig_python)
   endif ()
   # Get target library name (example _pyupm_a110x-python2)
   set (python_wrapper_target ${SWIG_MODULE_${python_wrapper_name}_REAL_NAME})
+
+  if(module_iface)
+    add_dependencies(${python_wrapper_target} _pyupm_new_interfaces-python${PYTHON_VERSION_MAJOR})
+  endif()
+
   add_dependencies(${python_wrapper_target} ${libname})
 
   swig_link_libraries (${python_wrapper_name} ${PYTHON_LIBRARIES} ${libname})
@@ -391,7 +401,7 @@ endfunction(upm_swig_python)
 function(upm_swig_node)
   # Skip if the libname is in the blacklist
   if (NOT ";${NODESWIG_BLACKLIST};" MATCHES ";${libname};")
-    # SWIG treats SWIG_FLAGS as a list and not a string so semicolon seperation is
+    # SWIG treats SWIG_FLAGS as a list and not a string so semicolon seperation is 
     # required. This hardcodes V8_VERSION to be <10 but I assume that's not going
     # to be a problem for a little while! SWIG uses a padded SWIG_V8 version which
     # we hack together from our findnode module.
@@ -857,7 +867,11 @@ function(upm_module_init)
   # Install interface file if it exists
   if(DEFINED module_iface)
     set(iface_path ${PROJECT_SOURCE_DIR}/include/interfaces)
-    install (FILES ${iface_path}/${module_iface}
+    set(iface_files "")
+    foreach(iface ${module_iface})
+      LIST(APPEND iface_files "${iface_path}/${iface}")
+    endforeach(iface ${module_iface})    
+    install (FILES ${iface_files}
       DESTINATION include/upm/interfaces
       COMPONENT ${CMAKE_PROJECT_NAME}-dev)
   endif(DEFINED module_iface)
@@ -932,6 +946,7 @@ foreach(subdir ${MODULE_LIST})
     add_subdirectory(${subdir})
   endif()
 endforeach()
+add_subdirectory(${PROJECT_SOURCE_DIR}/include/interfaces ${CMAKE_BINARY_DIR}/interfaces)
 
 # Print stats for all targets
 _print_target_summary()
