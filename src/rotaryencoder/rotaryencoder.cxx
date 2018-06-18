@@ -53,4 +53,6 @@ int RotaryEncoder::position()
     return rotaryencoder_get_position(m_rotaryencoder);
 }
 
-
+float RotaryEncoder::getValue() {
+    return (float) RotaryEncoder::position();
+}

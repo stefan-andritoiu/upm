@@ -1,6 +1,6 @@
 /*
- * Author: Jon Trulson <jtrulson@ics.com>
- * Copyright (c) 2014 Intel Corporation.
+ * Author: Mihai Stefanescu <mihai.stefanescu@rinftech.com>
+ * Copyright (c) 2018 Intel Corporation.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -22,51 +22,31 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <iostream>
-#include <string>
-#include <stdexcept>
+#pragma once
 
-#include "vdiv.hpp"
-
-using namespace upm;
-using namespace std;
-
-VDiv::VDiv(int pin)
+namespace upm
 {
-  if ( !(m_aio = mraa_aio_init(pin)) )
-    {
-      throw std::invalid_argument(std::string(__FUNCTION__) +
-                                  ": mraa_aio_init() failed, invalid pin?");
-      return;
-    }
-}
+/**
+ * @brief Interface for GPS modules
+*/
+  class iGps
+  {
+  public:
+    virtual ~iGps() {}
 
-VDiv::~VDiv()
-{
-  mraa_aio_close(m_aio);
-}
+    /**
+     * Enable or disable the device.
+     *
+     * @param enable true to enable the device, false otherwise.
+     */
+    virtual void enable(bool enable) = 0;
 
-unsigned int VDiv::value(unsigned int samples)
-{
-  int sum = 0;
+    /**
+     * Set the baudrate of the device.
+     *
+     * @param baudrate The baud rate to set for the device.
+     */
+    virtual void setBaudrate(unsigned int baudrate) = 0;
 
-  for (unsigned int i=0; i<samples; i++)
-    {
-      sum += mraa_aio_read(m_aio);
-      if (sum == -1) return 0;
-      usleep(2000);
-    }
-
-  return (sum / samples);
-}
-
-unsigned int VDiv::getValue()
-{
-    return VDiv::value(1);
-}
-
-float VDiv::computedValue(uint8_t gain, unsigned int val, int vref, int res)
-{
-  return ((float(gain) * float(val) * float(vref) / float(res)) / 1000.0);
-
+  };
 }

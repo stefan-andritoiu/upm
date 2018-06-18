@@ -51,27 +51,25 @@ namespace upm
      * @param unit The temperature unit for the conversion.
      * @return The converted temperature value
      */
-    static float convertCelsiusTo(float celsiusValue, TemperatureUnit unit);
-  };
-
-  float iTemperature::convertCelsiusTo(float celsiusValue, TemperatureUnit unit)
-  {
-    float convertedValue = celsiusValue;
-
-    switch (unit)
+    static float convertCelsiusTo(float celsiusValue, TemperatureUnit unit)
     {
-      case TemperatureUnit::CELSIUS:
-        break;
-      case TemperatureUnit::FAHRENHEIT:
-        convertedValue = celsiusValue * 1.8f + 32;
-        break;
-      case TemperatureUnit::KELVIN:
-        convertedValue += 273.15f;
-        break;
-      default:
-        throw std::invalid_argument("invalid temperature unit");
-    }
+      float convertedValue = celsiusValue;
 
-    return convertedValue;
-  }
+      switch (unit)
+      {
+        case TemperatureUnit::CELSIUS:
+          break;
+        case TemperatureUnit::FAHRENHEIT:
+          convertedValue = celsiusValue * 1.8f + 32;
+          break;
+        case TemperatureUnit::KELVIN:
+          convertedValue += 273.15f;
+          break;
+        default:
+          throw std::invalid_argument("invalid temperature unit");
+      }
+
+      return convertedValue;
+    }
+  };
 }

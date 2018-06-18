@@ -255,9 +255,14 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
       endforeach()
       string(REPLACE "#" "%" SWIG_PERCENT_INCLUDES "${SWIG_HASH_INCLUDES}")
       if(module_iface)
-        foreach(_iface ${module_iface})
-          set(SWIG_PERCENT_INCLUDES "%import \"interfaces/${_iface}\"")
-        endforeach(_iface ${module_iface})        
+        # Set up Python bindings
+        set(PYTHON_NEW_INTERFACES "#ifdef SWIGPYTHON\n")
+        string(APPEND PYTHON_NEW_INTERFACES "%module (package=\"pyupm_new_interfaces\") ${libname}\n")
+        string(APPEND PYTHON_NEW_INTERFACES "#endif")
+        # Include interfaces
+        set(IMPORT_NEW_INTERFACES "%import \"interfaces/new_interfaces.i\"")
+        string(APPEND JAVA_TYPEMAPS "%typemap(javaimports) SWIGTYPE %{\n")
+        string(APPEND JAVA_TYPEMAPS "import upm_new_interfaces.*;\n%}")
       endif()
       # Write the interface file
       configure_file (${PROJECT_SOURCE_DIR}/src/swigme.i.in "${${varDotIFile}}" @ONLY)
