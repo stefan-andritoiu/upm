@@ -1,5 +1,5 @@
 #ifdef SWIGPYTHON
-%module (package="upm") lidarlitev3
+%module (package="pyupm_new_interfaces") lidarlitev3
 #endif
 
 %import "interfaces/new_interfaces.i"
