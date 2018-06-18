@@ -1,5 +1,5 @@
 #ifdef SWIGPYTHON
-%module (package="upm") rhusb
+%module (package="pyupm_new_interfaces") rhusb
 #endif
 
 %import "interfaces/new_interfaces.i"
