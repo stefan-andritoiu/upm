@@ -261,6 +261,7 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
         string(APPEND PYTHON_NEW_INTERFACES "#endif")
         # Include interfaces
         set(IMPORT_NEW_INTERFACES "%import \"interfaces/new_interfaces.i\"")
+        # Set up Java bindings
         string(APPEND JAVA_TYPEMAPS "%typemap(javaimports) SWIGTYPE %{\n")
         string(APPEND JAVA_TYPEMAPS "import upm_new_interfaces.*;\n%}")
       endif()
@@ -425,6 +426,11 @@ function(upm_swig_node)
                          ${CMAKE_CURRENT_BINARY_DIR}/..
                          ${DEPEND_DIRS})
 
+    # Include interface directory
+    if (module_iface)
+      include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+    endif()
+
     # Decide between ${libname}.i or a language-specific .i
     _get_current_dot_i_file(jsupm SWIG_CURRENT_DOT_I_FILE)
     # If this module is using ${libname}.i, provide a module name for UseSWIG AND SWIG_FLAGS
@@ -445,6 +451,12 @@ function(upm_swig_node)
     else ()
       swig_add_library (jsupm_${libname} LANGUAGE javascript SOURCES ${SWIG_CURRENT_DOT_I_FILE})
     endif ()
+
+    # Add interfaces if necessary
+    if(module_iface)
+      add_dependencies(jsupm_${libname} jsupm_new_interfaces)
+    endif()
+
     add_dependencies(jsupm_${libname} ${libname})
     swig_link_libraries (jsupm_${libname} ${NODE_LIBRARIES} ${libname})
     target_include_directories ( ${SWIG_MODULE_jsupm_${libname}_REAL_NAME}
@@ -539,6 +551,7 @@ function(upm_swig_java)
     endif ()
     if(module_iface)
       add_dependencies(javaupm_${libname} javaupm_new_interfaces)
+      include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
       set (NEW_INTERFACES_JAR_FILE ${CMAKE_BINARY_DIR}/interfaces/upm_new_interfaces.jar)
     endif()
     # For linker to report unresolved symbols.  Note, there is currently no test
