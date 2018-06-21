@@ -47,22 +47,24 @@ namespace upm
       * @param unit The distance unit for the conversion.
       * @return The converted distance value
       */
-    static float convertCmTo(float cmValue, DistanceUnit unit)
-    {
-      float convertedValue = cmValue;
-
-      switch (unit)
-      {
-        case DistanceUnit::CM:
-          break;
-        case DistanceUnit::INCH:
-          convertedValue *= 0.3937f;
-          break;
-        default:
-          throw std::invalid_argument("invalid distance unit");
-      }
-
-      return convertedValue;
-    }
+    static float convertCmTo(float cmValue, DistanceUnit unit);
   };
+
+  float iDistance::convertCmTo(float cmValue, DistanceUnit unit)
+  {
+    float convertedValue = cmValue;
+
+    switch (unit)
+    {
+      case DistanceUnit::CM:
+        break;
+      case DistanceUnit::INCH:
+        convertedValue *= 0.3937f;
+        break;
+      default:
+        throw std::invalid_argument("invalid distance unit");
+    }
+
+    return convertedValue;
+  }
 }

@@ -12,15 +12,15 @@ main()
 {
   vector<iTemperature*> tempSensors {new LM35(0), new ABP(0, ABP_DEFAULT_ADDRESS)};
 
-  for (auto& sensor : tempSensors) {
-    float celsiusTemp = sensor->getTemperature();
-    cout << "Temperature in Celsius degrees: " << celsiusTemp << endl;
-    cout << "Temperature in Kelvin: " << iTemperature::convertCelsiusTo(celsiusTemp, TemperatureUnit::KELVIN);
+  for (auto sensor : tempSensors) {
+    cout << sensor->getTemperature() << endl;
   }
 
-  for (auto& sensor : tempSensors) {
+  for (iTemperature* sensor : tempSensors) {
     delete sensor;
   }
+
+  tempSensors.clear();
 
   return 0;
 }

@@ -51,31 +51,33 @@ namespace upm
      * @param unit The pressure unit for the conversion.
      * @return The converted pressure value
      */
-    static float convertPaTo(float paValue, PressureUnit unit)
-    {
-      float convertedValue = paValue;
-
-      switch (unit)
-      {
-        case PressureUnit::PA:
-          break;
-        case PressureUnit::BAR:
-          convertedValue *= 0.00001f;
-          break;
-        case PressureUnit::ATM:
-          convertedValue *= 0.0000098692f;
-          break;
-        case PressureUnit::TORR:
-          convertedValue *= 0.0075006f;
-          break;
-        case PressureUnit::PSI:
-          convertedValue *= 0.0001450377f;
-          break;
-        default:
-          throw std::invalid_argument("invalid pressure unit");
-      }
-
-      return convertedValue;
-    }
+    static float convertPaTo(float paValue, PressureUnit unit);
   };
+
+  float iPressure::convertPaTo(float paValue, PressureUnit unit)
+  {
+    float convertedValue = paValue;
+
+    switch (unit)
+    {
+      case PressureUnit::PA:
+        break;
+      case PressureUnit::BAR:
+        convertedValue *= 0.00001f;
+        break;
+      case PressureUnit::ATM:
+        convertedValue *= 0.0000098692f;
+        break;
+      case PressureUnit::TORR:
+        convertedValue *= 0.0075006f;
+        break;
+      case PressureUnit::PSI:
+        convertedValue *= 0.0001450377f;
+        break;
+      default:
+        throw std::invalid_argument("invalid pressure unit");
+    }
+
+    return convertedValue;
+  }
 }

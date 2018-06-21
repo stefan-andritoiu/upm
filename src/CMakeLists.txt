@@ -253,7 +253,17 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
       set(SWIG_HASH_INCLUDES "#include \"${SWIG_HASH_INCLUDES}\"")
       # And the SWIG import string
       string(REPLACE "#" "%" SWIG_PERCENT_INCLUDES "${SWIG_HASH_INCLUDES}")
-
+      if(module_iface)
+        # Set up Python bindings
+        set(PYTHON_NEW_INTERFACES "#ifdef SWIGPYTHON\n")
+        string(APPEND PYTHON_NEW_INTERFACES "%module (package=\"pyupm_new_interfaces\") ${libname}\n")
+        string(APPEND PYTHON_NEW_INTERFACES "#endif")
+        # Include interfaces
+        set(IMPORT_NEW_INTERFACES "%import \"interfaces/new_interfaces.i\"")
+        # Set up Java bindings
+        string(APPEND JAVA_TYPEMAPS "%typemap(javaimports) SWIGTYPE %{\n")
+        string(APPEND JAVA_TYPEMAPS "import upm_new_interfaces.*;\n%}")
+      endif()
       # Write the interface file
       configure_file (${PROJECT_SOURCE_DIR}/src/swigme.i.in "${${varDotIFile}}" @ONLY)
   endif()
@@ -271,7 +281,8 @@ macro(_upm_swig_python)
 
   include_directories (${CMAKE_CURRENT_SOURCE_DIR}
                        ${CMAKE_CURRENT_BINARY_DIR}/..
-                       ${DEPEND_DIRS})
+                       ${DEPEND_DIRS}
+                       ${UPM_COMMON_HEADER_DIRS})
 
   # Decide between ${libname}.i or a language-specific .i
   _get_current_dot_i_file(pyupm SWIG_CURRENT_DOT_I_FILE)
@@ -305,6 +316,11 @@ macro(_upm_swig_python)
   endif ()
   # Get target library name (example _pyupm_a110x-python2)
   set (python_wrapper_target ${SWIG_MODULE_${python_wrapper_name}_REAL_NAME})
+
+  if(module_iface)
+    add_dependencies(${python_wrapper_target} _pyupm_new_interfaces-python${PYTHON_VERSION_MAJOR})
+  endif()
+
   add_dependencies(${python_wrapper_target} ${libname})
 
   swig_link_libraries (${python_wrapper_name} ${PYTHON_LIBRARIES} ${libname} -Wl,--unresolved-symbols=report-all)
@@ -390,7 +406,7 @@ endfunction(upm_swig_python)
 function(upm_swig_node)
   # Skip if the libname is in the blacklist
   if (NOT ";${NODESWIG_BLACKLIST};" MATCHES ";${libname};")
-    # SWIG treats SWIG_FLAGS as a list and not a string so semicolon seperation is
+    # SWIG treats SWIG_FLAGS as a list and not a string so semicolon seperation is 
     # required. This hardcodes V8_VERSION to be <10 but I assume that's not going
     # to be a problem for a little while! SWIG uses a padded SWIG_V8 version which
     # we hack together from our findnode module.
@@ -408,6 +424,11 @@ function(upm_swig_node)
     include_directories (${CMAKE_CURRENT_SOURCE_DIR}
                          ${CMAKE_CURRENT_BINARY_DIR}/..
                          ${DEPEND_DIRS})
+
+    # Include interface directory
+    if (module_iface)
+      include_directories(${PROJECT_SOURCE_DIR}/include)
+    endif()
 
     # Decide between ${libname}.i or a language-specific .i
     _get_current_dot_i_file(jsupm SWIG_CURRENT_DOT_I_FILE)
@@ -429,6 +450,12 @@ function(upm_swig_node)
     else ()
       swig_add_library (jsupm_${libname} LANGUAGE javascript SOURCES ${SWIG_CURRENT_DOT_I_FILE})
     endif ()
+
+    # Add interfaces if necessary
+    if(module_iface)
+      add_dependencies(jsupm_${libname} jsupm_new_interfaces)
+    endif()
+
     add_dependencies(jsupm_${libname} ${libname})
     swig_link_libraries (jsupm_${libname} ${NODE_LIBRARIES} ${libname})
     target_include_directories ( ${SWIG_MODULE_jsupm_${libname}_REAL_NAME}
@@ -489,6 +516,9 @@ function(upm_swig_java)
                          ${CMAKE_CURRENT_SOURCE_DIR}
                          ${CMAKE_CURRENT_BINARY_DIR}/..
                          ${DEPEND_DIRS})
+    if (module_iface)
+      include_directories(${PROJECT_SOURCE_DIR}/include)
+    endif()
 
     # Decide between ${libname}.i or a language-specific .i
     _get_current_dot_i_file(javaupm SWIG_CURRENT_DOT_I_FILE)
@@ -521,6 +551,10 @@ function(upm_swig_java)
       # target .jar file in the classpath, otherwise this variable will be empty
       set (INTERFACES_JAR_FILE ${CMAKE_BINARY_DIR}/src/interfaces/upm_interfaces.jar)
     endif ()
+    if(module_iface)
+      add_dependencies(javaupm_${libname} javaupm_new_interfaces)
+      set (NEW_INTERFACES_JAR_FILE ${CMAKE_BINARY_DIR}/interfaces/upm_new_interfaces.jar)
+    endif()
     # For linker to report unresolved symbols.  Note, there is currently no test
     # for linker flags (similar to compile files), so this is it for now.
     swig_link_libraries (javaupm_${libname} ${MRAAJAVA_LIBRARY} ${JAVA_LIBRARIES} ${libname} -Wl,--unresolved-symbols=report-all)
@@ -571,7 +605,7 @@ function(upm_swig_java)
     add_custom_command (TARGET javaupm_${libname}
         POST_BUILD
         COMMAND cmake -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/upm_${libname}
-        COMMAND ${JAVAC} *.java -d ${CMAKE_CURRENT_BINARY_DIR} -cp ${INTERFACES_JAR_FILE}:.
+        COMMAND ${JAVAC} *.java -d ${CMAKE_CURRENT_BINARY_DIR} -cp ${INTERFACES_JAR_FILE}:${NEW_INTERFACES_JAR_FILE}:.
         COMMAND ${JAR} cf upm_${libname}.jar upm_${libname}
     )
 
@@ -685,6 +719,7 @@ endif (BUILDCORDOVA)
 function (UPM_MIXED_MODULE_INIT)
   # CPP_WRAPS_C -> Set to have CPP library link to C library
   # DESCRIPTION -> Library description string
+  # IFACE_HDR -> List of interface header files
   # CPP_HDR -> List of CPP header files
   # CPP_SRC -> List of CPP source files
   # C_HDR -> List of C header files
@@ -696,7 +731,7 @@ function (UPM_MIXED_MODULE_INIT)
   #     libnamec -> C target name (if used)
   set (options CPP_WRAPS_C)
   set (oneValueArgs NAME DESCRIPTION)
-  set (multiValueArgs CPP_HDR CPP_SRC C_HDR C_SRC FTI_SRC FTI_HDR REQUIRES)
+  set (multiValueArgs IFACE_HDR CPP_HDR CPP_SRC C_HDR C_SRC FTI_SRC FTI_HDR REQUIRES)
   # Parse function parameters
   cmake_parse_arguments(UPM_MIXED_MODULE_INIT "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
@@ -746,7 +781,10 @@ function (UPM_MIXED_MODULE_INIT)
     # Set the src and hpp variables for upm_module_init
     set (module_src ${UPM_MIXED_MODULE_INIT_CPP_SRC})
     set (module_hpp ${UPM_MIXED_MODULE_INIT_CPP_HDR})
-
+    if(DEFINED UPM_MIXED_MODULE_INIT_IFACE_HDR)
+      set (module_iface ${UPM_MIXED_MODULE_INIT_IFACE_HDR})
+    endif(DEFINED UPM_MIXED_MODULE_INIT_IFACE_HDR)
+    
     # Reset the libname (upm_module_init can change it)
     set (libname ${UPM_MIXED_MODULE_INIT_NAME})
     unset (IS_C_LIBRARY)
@@ -859,6 +897,18 @@ function(upm_module_init)
       DESTINATION ${LIB_INSTALL_DIR}
       COMPONENT ${CMAKE_PROJECT_NAME})
 
+  # Install interface file if it exists
+  if(DEFINED module_iface)
+    set(iface_path ${PROJECT_SOURCE_DIR}/include/interfaces)
+    set(iface_files "")
+    foreach(iface ${module_iface})
+      LIST(APPEND iface_files "${iface_path}/${iface}")
+    endforeach(iface ${module_iface})    
+    install (FILES ${iface_files}
+      DESTINATION include/upm/interfaces
+      COMPONENT ${CMAKE_PROJECT_NAME}-dev)
+  endif(DEFINED module_iface)
+  
   # Install header files to include/upm/
   install (FILES ${module_hpp}
       DESTINATION include/upm
@@ -929,6 +979,7 @@ foreach(subdir ${MODULE_LIST})
     add_subdirectory(${subdir})
   endif()
 endforeach()
+add_subdirectory(${PROJECT_SOURCE_DIR}/include/interfaces ${CMAKE_BINARY_DIR}/interfaces)
 
 # Print stats for all targets
 _print_target_summary()
