@@ -18,10 +18,17 @@ target_link_libraries(json_tests GTest::GTest GTest::Main)
 target_include_directories(json_tests PRIVATE "${UPM_COMMON_HEADER_DIRS}/")
 gtest_add_tests(json_tests "" AUTO)
 
+# Unit tests - logger header library
+add_executable(logger_tests logger/logger_tests.cxx)
+target_link_libraries(logger_tests pthread GTest::GTest GTest::Main)
+target_include_directories(logger_tests PRIVATE "${UPM_COMMON_HEADER_DIRS}/")
+gtest_add_tests(logger_tests "" AUTO)
+
 # Add a custom target for unit tests
 add_custom_target(tests-unit ALL
     DEPENDS
     utilities_tests
     json_tests
+    logger_tests
     COMMENT "UPM unit test collection")
 
