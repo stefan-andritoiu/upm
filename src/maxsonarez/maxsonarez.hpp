@@ -92,11 +92,11 @@ namespace upm {
     int inches();
 
     /**
-     * Gets the distance to the object in inches
+     * Gets the distance to the object in cm
      *
-     * @return Distance to the object in inches
+     * @return Distance to the object in cm
      */
-    virtual int getDistance();
+    virtual float getDistance();
 
   private:
     mraa_aio_context m_aio;
