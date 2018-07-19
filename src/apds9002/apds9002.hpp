@@ -68,7 +68,7 @@ namespace upm {
     /**
      * Gets the luminance value from the sensor
      *
-     * @return Luminance value
+     * @return Luminance value in lumen
      */
     int value();
 
