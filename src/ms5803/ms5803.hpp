@@ -139,7 +139,7 @@ namespace upm {
          * been called prior to calling this function.  The returned
          * value is in millibars.
          *
-         * @return Pressure in mbar
+         * @return Pressure in Pa
          */
         virtual float getPressure();
 
