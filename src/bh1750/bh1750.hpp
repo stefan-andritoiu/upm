@@ -37,7 +37,7 @@ namespace upm {
     /**
      * @brief BH1750 Light Sensor
      * @defgroup bh1750 libupm-bh1750
-     * @ingroup dfrobot i2c
+     * @ingroup rohm dfrobot i2c
      */
 
     /**
@@ -45,7 +45,7 @@ namespace upm {
      * @sensor bh1750
      * @comname Digital Light Sensor
      * @type light
-     * @man dfrobot
+     * @man rohm dfrobot
      * @con i2c
      * @web http://www.dfrobot.com/index.php?route=product/product&product_id=531
      *
