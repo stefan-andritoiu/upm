@@ -256,7 +256,7 @@ function (_get_current_dot_i_file filePrefix varDotIFile)
       if(module_iface)
         # Set up Python bindings
         set(PYTHON_NEW_INTERFACES "#ifdef SWIGPYTHON\n")
-        string(APPEND PYTHON_NEW_INTERFACES "%module (package=\"pyupm_new_interfaces\") ${libname}\n")
+        string(APPEND PYTHON_NEW_INTERFACES "%module (package=\"upm\") ${libname}\n")
         string(APPEND PYTHON_NEW_INTERFACES "#endif")
         # Include interfaces
         set(IMPORT_NEW_INTERFACES "%import \"interfaces/new_interfaces.i\"")
