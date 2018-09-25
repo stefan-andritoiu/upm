@@ -27,4 +27,4 @@ set (module_hpp iClock.hpp
                 iAcceleration.hpp
 )
 # Install interfaces headers a bit differently
-install (FILES ${module_hpp} DESTINATION include/upm/interfaces COMPONENT ${libname})
+install (FILES ${module_hpp} DESTINATION include/upm/old_interfaces COMPONENT ${libname})

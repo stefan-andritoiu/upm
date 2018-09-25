@@ -2,8 +2,8 @@
 
 /* BEGIN Java syntax  ------------------------------------------------------- */
 #ifdef SWIGJAVA
-%import "../interfaces/javaupm_iADC.i"
-%typemap(javaimports) SWIGTYPE %{import upm_interfaces.*;%}
+%import "../old_interfaces/javaupm_iADC.i"
+%typemap(javaimports) SWIGTYPE %{import upm_old_interfaces.*;%}
 
 JAVA_JNI_LOADLIBRARY(javaupm_ads1x15)
 #endif

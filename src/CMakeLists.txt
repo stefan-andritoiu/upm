@@ -556,11 +556,11 @@ function(upm_swig_java)
 
     # If the C++ target depends on C++ interfaces, make the JAVA target
     # depend on the JAVA interfaces
-    if ("${_c_cxx_dependency_list}" MATCHES interfaces)
-      add_dependencies(javaupm_${libname} javaupm_interfaces)
+    if ("${_c_cxx_dependency_list}" MATCHES old_interfaces)
+      add_dependencies(javaupm_${libname} javaupm_old_interfaces)
       # If this target depends on interfaces, include the java interfaces
       # target .jar file in the classpath, otherwise this variable will be empty
-      set (INTERFACES_JAR_FILE ${CMAKE_BINARY_DIR}/src/interfaces/upm_interfaces.jar)
+      set (OLD_INTERFACES_JAR_FILE ${CMAKE_BINARY_DIR}/src/old_interfaces/upm_old_interfaces.jar)
     endif ()
     if(module_iface)
       add_dependencies(javaupm_${libname} javaupm_new_interfaces)
@@ -616,7 +616,7 @@ function(upm_swig_java)
     add_custom_command (TARGET javaupm_${libname}
         POST_BUILD
         COMMAND cmake -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/upm_${libname}
-        COMMAND ${JAVAC} *.java -d ${CMAKE_CURRENT_BINARY_DIR} -cp ${INTERFACES_JAR_FILE}:${NEW_INTERFACES_JAR_FILE}:.
+        COMMAND ${JAVAC} *.java -d ${CMAKE_CURRENT_BINARY_DIR} -cp ${OLD_INTERFACES_JAR_FILE}:${NEW_INTERFACES_JAR_FILE}:.
         COMMAND ${JAR} cf upm_${libname}.jar upm_${libname}
     )
 
@@ -678,10 +678,10 @@ if (BUILDSWIGNODE)
 
         # Utilities and interfaces
         file (COPY ${CMAKE_SOURCE_DIR}/src/utilities DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/jsupm_${libname})
-        file (COPY ${CMAKE_SOURCE_DIR}/src/interfaces DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/jsupm_${libname})
+        file (COPY ${CMAKE_SOURCE_DIR}/src/old_interfaces DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/jsupm_${libname})
         set (upm_LIB_SRCS_GYP "'utilities/upm_utilities.c',\n${upm_LIB_SRCS_GYP}")
         set (upm_LIB_INCLUDE_DIRS_GYP "'utilities',\n${upm_LIB_INCLUDE_DIRS_GYP}")
-        set (upm_LIB_INCLUDE_DIRS_GYP "'interfaces',\n${upm_LIB_INCLUDE_DIRS_GYP}")
+        set (upm_LIB_INCLUDE_DIRS_GYP "'old_interfaces',\n${upm_LIB_INCLUDE_DIRS_GYP}")
 
         # Add readme, package.json for NPM and node-gyp config file
         configure_file (${PROJECT_SOURCE_DIR}/src/binding.gyp.in ${CMAKE_CURRENT_BINARY_DIR}/jsupm_${libname}/binding.gyp @ONLY)
@@ -980,8 +980,8 @@ endif()
 
 # If the module list does NOT include the interfaces directory, prepend it since
 # some sensor library targets depend on interfaces
-if (NOT "${MODULE_LIST}" MATCHES ";interfaces;")
-  set(MODULE_LIST "interfaces;${MODULE_LIST}")
+if (NOT "${MODULE_LIST}" MATCHES ";old_interfaces;")
+  set(MODULE_LIST "old_interfaces;${MODULE_LIST}")
 endif()
 
 # Iterate over each directory in MODULE_LIST

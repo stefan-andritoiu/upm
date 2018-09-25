@@ -24,7 +24,7 @@
 
 
 #include "mraa/i2c.hpp"
-#include "interfaces/iCO2Sensor.hpp"
+#include "old_interfaces/iCO2Sensor.hpp"
 
 namespace upm {
 /**

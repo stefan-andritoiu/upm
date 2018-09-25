@@ -22,7 +22,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "interfaces/iLightController.hpp"
+#include "old_interfaces/iLightController.hpp"
 // #include "mraa/gpio.hpp"
 #include "mraa/pwm.hpp"
 

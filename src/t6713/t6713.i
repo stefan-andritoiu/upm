@@ -4,8 +4,8 @@
 #ifdef SWIGJAVA
 %include "arrays_java.i";
 %include "../java_buffer.i"
-%typemap(javaimports) SWIGTYPE %{import upm_interfaces.*;%}
-%import "../interfaces/javaupm_iCO2Sensor.i"
+%typemap(javaimports) SWIGTYPE %{import upm_old_interfaces.*;%}
+%import "../old_interfaces/javaupm_iCO2Sensor.i"
 
 JAVA_JNI_LOADLIBRARY(javaupm_t6713)
 #endif

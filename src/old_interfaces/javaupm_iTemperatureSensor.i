@@ -2,7 +2,7 @@
     %include <swiginterface.i>
     %interface_impl(upm::ITemperatureSensor);
 #endif
-%include "interfaces.i"
+%include "old_interfaces.i"
 %include "javaupm_iModuleStatus.i"
 
 %include "iTemperatureSensor.hpp"

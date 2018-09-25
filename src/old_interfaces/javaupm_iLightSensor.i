@@ -2,7 +2,7 @@
     %include <swiginterface.i>
     %interface_impl(upm::ILightSensor);
 #endif
-%include "interfaces.i"
+%include "old_interfaces.i"
 %include "javaupm_iModuleStatus.i"
 
 %include "iLightSensor.hpp"
