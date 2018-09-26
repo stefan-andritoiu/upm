@@ -1,7 +1,7 @@
 #ifdef SWIGPYTHON
-%module (package="upm") pyupm_new_interfaces
+%module (package="upm") pyupm_interfaces
 #else
-%module new_interfaces
+%module interfaces
 #endif
 
 #ifdef SWIGJAVA

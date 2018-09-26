@@ -2,7 +2,7 @@
 %module (package="upm") ttp223
 #endif
 
-%import "interfaces/new_interfaces.i"
+%import "interfaces/interfaces.i"
 
 %include "../common_top.i"
 
@@ -10,7 +10,7 @@
 #ifdef SWIGJAVA
 %module (docstring="TTP223 Touch Sensor") javaupm_ttp223
 %typemap(javaimports) SWIGTYPE %{
-import upm_new_interfaces.*;
+import upm_interfaces.*;
 %}
 
 
