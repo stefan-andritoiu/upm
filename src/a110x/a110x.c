@@ -34,7 +34,7 @@ a110x_context a110x_init(int pin) {
     }
 
     a110x_context dev =
-      (a110x_context) malloc(sizeof(struct _a110x_context));
+      (a110x_context)malloc(sizeof(struct _a110x_context));
 
     if (!dev)
       {
