@@ -33,7 +33,7 @@ using namespace std;
 
 A110X::A110X(int pin)
 {
-  if ( !(m_gpio = mraa_gpio_init(pin)) )
+  if (!(m_gpio = mraa_gpio_init(pin)) )
     {
       throw std::invalid_argument(std::string(__FUNCTION__) +
                                   ": mraa_gpio_init() failed, invalid pin?");
