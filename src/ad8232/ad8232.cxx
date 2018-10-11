@@ -23,30 +23,82 @@
  */
 
 #include <iostream>
+#include <typeinfo>
 
+#include "upm_string_parser.hpp"
 #include "ad8232.hpp"
 
 using namespace upm;
 using namespace std;
 
-AD8232::AD8232(int loPlus, int loMinus, int output, float aref) :
-  m_gpioLOPlus(loPlus), m_gpioLOMinus(loMinus), m_aioOUT(output)
+static bool operator!(mraa::MraaIo &mraaIo)
 {
-  m_gpioLOPlus.dir(mraa::DIR_IN);
-  m_gpioLOMinus.dir(mraa::DIR_IN);
-  
+  return mraaIo.getMraaDescriptors() == NULL;
+}
+
+AD8232::AD8232(int loPlus, int loMinus, int output, float aref) {
+  m_gpioLOPlus = new mraa::Gpio(loPlus);
+  m_gpioLOMinus = new mraa::Gpio(loMinus);
+  m_aioOUT = new mraa::Aio(output);
+
+  m_gpioLOPlus->dir(mraa::DIR_IN);
+  m_gpioLOMinus->dir(mraa::DIR_IN);
+
   m_aref = aref;
-  m_ares = (1 << m_aioOUT.getBit());
+  m_ares = (1 << m_aioOUT->getBit());
+}
+
+AD8232::AD8232(std::string initStr) : mraaIo(initStr) {
+  if(!mraaIo.gpios.empty()) {
+    if(mraaIo.gpios.size() == 2) {
+      m_gpioLOPlus = &mraaIo.gpios[0];
+      m_gpioLOMinus = &mraaIo.gpios[1];
+    }
+    else {
+      throw std::invalid_argument(std::string(__FUNCTION__) +
+                            ": mraa_gpio_init() must initialize two pins");
+    }
+  }
+  else {
+    throw std::invalid_argument(std::string(__FUNCTION__) +
+                            ": mraa_gpio_init() failed, invalid pin?");
+  }
+
+  if(!mraaIo.aios.empty()) {
+    m_aioOUT = &mraaIo.aios[0];
+  }
+  else {
+    throw std::invalid_argument(std::string(__FUNCTION__) +
+                            ": mraa_aio_init() failed, invalid pin?");
+  }
+
+  std::vector<std::string> upmTokens;
+
+  if(!mraaIo.getLeftoverStr().empty()) {
+    upmTokens = UpmStringParser::parse(mraaIo.getLeftoverStr());
+  }
+
+  for (std::string tok : upmTokens) {
+    if(tok.substr(0, 5) == "volt:") {
+      m_aref = std::stof(tok.substr(5));
+    }
+  }
+  m_ares = (1 << m_aioOUT->getBit());
 }
 
 AD8232::~AD8232()
 {
+  if(!mraaIo) {
+    delete m_gpioLOPlus;
+    delete m_gpioLOMinus;
+    delete m_aioOUT;
+  }
 }
 
 int AD8232::value()
 {
-  if (m_gpioLOPlus.read() || m_gpioLOMinus.read())
+  if (m_gpioLOPlus->read() || m_gpioLOMinus->read())
     return 0;
   else
-    return m_aioOUT.read();
+    return m_aioOUT->read();
 }
